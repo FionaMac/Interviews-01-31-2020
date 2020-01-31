@@ -20,6 +20,21 @@ app.get( '/daily', async ( request: any, response: any ) => {
     response.send(result);
 } );
 
+// Handle get requests to /nasa for /timeline endpoint
+app.get( '/timeline', async ( request: any, response: any ) => {
+    const daily = new DailyImage();
+    //get date params from query and convert to array (stripping extra characters)
+    const dates = request.query.dates.replace(/"/g, '').split(',');
+
+
+    const results = dates.map(async date =>
+        await daily.getImageForDate(date)
+    );
+
+    response.send(results);
+} );
+
+
 // start the Express server
 app.listen( port, () => {
     // tslint:disable-next-line:no-console
