@@ -26,12 +26,19 @@ app.get( '/timeline', async ( request: any, response: any ) => {
     //get date params from query and convert to array (stripping extra characters)
     const dates = request.query.dates.replace(/"/g, '').split(',');
 
-
-    const results = dates.map(async date =>
-        await daily.getImageForDate(date)
+    //send requests for individual dates
+    const results = dates.map(async (date: string) =>
+            await daily.getImageForDate(date)
     );
 
-    response.send(results);
+    //wait for all promises to be resolved then return results
+    Promise.all(results)
+        .then(results => {
+            response.send(results);
+        })
+        .catch(e => {
+            console.error(e);
+        });
 } );
 
 
