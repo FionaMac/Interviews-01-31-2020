@@ -36,7 +36,7 @@ timeline: [
 ```
 
 # Building the project
-Go to the Outreach-Interviews\candidate-questions\client-questions folder and run the following commands: 
+Go to the Nasa-Test folder and run the following commands: 
 ```
 npm install
 npm run start
